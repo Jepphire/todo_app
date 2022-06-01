@@ -1,5 +1,7 @@
 class TodoListsController < ApplicationController
   before_action :set_todo_list, only: %i[ show update destroy ]
+  # skip_before_action :authenticate, only: %i[ index show ]
+  # skip_before_filter :verify_authenticity_token, only: %i[ index show ]
 
   # GET /todo_lists
   def index

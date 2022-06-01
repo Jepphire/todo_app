@@ -1,0 +1,31 @@
+.new-list-btn {
+  border-radius: 50%;
+  padding: 0.15em;
+  border: none;
+  background: transparent;
+}
+
+.new-list-icon {
+  color: rgb(62, 61, 61);
+  font-weight: bold;
+  transition: font-size linear 150ms;
+}
+
+.new-list-icon:hover {
+  cursor: pointer;
+  color: black;
+  font-size: 2em;
+}
+
+.sidenav-list-container {
+  padding: 1em;
+}
+
+.sidenav-list-item {
+  margin-bottom: 12px;
+}
+
+.sidenav-list-link {
+  font-size: 1.5em;
+  text-decoration: none;
+}

@@ -1,3 +1,8 @@
 mat-sidenav-container {
   height: calc(100% - 64px);
 }
+
+mat-sidenav {
+  min-width: 20vw;
+  max-width: 95vw;
+}
