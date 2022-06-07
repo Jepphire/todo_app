@@ -16,4 +16,12 @@ export class TodoService {
     return this.http.get<any[]>('http://localhost:3000/todo_lists')
   }
 
+  getListById(id: number | string): Observable<any> {
+    return this.http.get('http://localhost:3000/todo_lists/' + id)
+  }
+
+  getListItems(id: number | string): Observable<any[]> {
+    return this.http.get<any[]>('http://localhost:3000/todo_items/items/' + id)
+  }
+
 }

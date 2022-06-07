@@ -3,6 +3,6 @@
 </button>
 <div class="sidenav-list-container">
   <div class="sidenav-list-item" *ngFor="let list of todoLists">
-    <a class="sidenav-list-link" [routerLink]="list.id">{{ list.title }}</a>
+    <a class="sidenav-list-link" [routerLink]="['/todo', list.id]">{{ list.title }}</a>
   </div>
 </div>

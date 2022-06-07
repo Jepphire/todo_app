@@ -10,6 +10,7 @@ import { HomeComponent } from './home/home.component';
 import { HeaderComponent } from './header/header.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { ListNavComponent } from './sidebar/list-nav/list-nav.component';
+import { TodoComponent } from './todo/todo.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { ListNavComponent } from './sidebar/list-nav/list-nav.component';
     HeaderComponent,
     SidebarComponent,
     ListNavComponent,
+    TodoComponent,
   ],
   imports: [
     BrowserModule,

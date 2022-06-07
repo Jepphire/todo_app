@@ -38,6 +38,12 @@ class TodoItemsController < ApplicationController
     @todo_item.destroy
   end
 
+  # GET /todo_items/items/items_where
+  def items_where
+    @todo_items = TodoItem.where("todo_list_id = ?", params[:todo_list_id])
+    render json: @todo_items
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_todo_item
@@ -48,4 +54,5 @@ class TodoItemsController < ApplicationController
     def todo_item_params
       params.require(:todo_item).permit(:description)
     end
+
 end
