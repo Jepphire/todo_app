@@ -1,8 +1,0 @@
-<button type="button" class="new-list-btn">
-  <mat-icon class="new-list-icon">add_circle_outline</mat-icon>
-</button>
-<div class="sidenav-list-container">
-  <div class="sidenav-list-item" *ngFor="let list of todoLists">
-    <a class="sidenav-list-link" [routerLink]="['/todo', list.id]">{{ list.title }}</a>
-  </div>
-</div>

@@ -20,15 +20,14 @@ export class TodoComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.route.params.subscribe(data => {
-      this.routeParams = data
-    });
-    this.todoService.getListById(this.routeParams['id']).subscribe(data => {
-      this.list = data
-    });
-    this.todoService.getListItems(this.routeParams['id']).subscribe(data => {
-      this.listItems = data
-    });
+    this.route.params.subscribe(params => {
+      this.todoService.getListById(params['id']).subscribe(data => {
+        this.list = data
+      });
+      this.todoService.getListItems(params['id']).subscribe(data => {
+        this.listItems = data
+      });
+    })
   }
 
 }

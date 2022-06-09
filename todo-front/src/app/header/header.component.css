@@ -2,6 +2,10 @@
   margin-left: 2em;
 }
 
+.title-link {
+  text-decoration: none;
+  color: white;
+}
 
 .nav-links {
   display: flex;

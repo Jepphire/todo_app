@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ListNavComponent } from './list-nav.component';
+import { TodoFormComponent } from './todo-form.component';
 
-describe('ListNavComponent', () => {
-  let component: ListNavComponent;
-  let fixture: ComponentFixture<ListNavComponent>;
+describe('TodoFormComponent', () => {
+  let component: TodoFormComponent;
+  let fixture: ComponentFixture<TodoFormComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ListNavComponent ]
+      declarations: [ TodoFormComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ListNavComponent);
+    fixture = TestBed.createComponent(TodoFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

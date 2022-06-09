@@ -2,7 +2,7 @@
 
 <mat-sidenav-container>
   <mat-sidenav #sidenav mode="over" [opened]="showSidenav">
-    <app-sidebar></app-sidebar>
+    <app-sidebar (toggleSidenav)="toggleSidenav()"></app-sidebar>
   </mat-sidenav>
   <mat-sidenav-content>
     <router-outlet></router-outlet>

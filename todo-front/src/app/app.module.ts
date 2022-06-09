@@ -9,8 +9,8 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { HeaderComponent } from './header/header.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
-import { ListNavComponent } from './sidebar/list-nav/list-nav.component';
 import { TodoComponent } from './todo/todo.component';
+import { TodoFormComponent } from './todo-form/todo-form.component';
 
 @NgModule({
   declarations: [
@@ -18,8 +18,8 @@ import { TodoComponent } from './todo/todo.component';
     HomeComponent,
     HeaderComponent,
     SidebarComponent,
-    ListNavComponent,
     TodoComponent,
+    TodoFormComponent,
   ],
   imports: [
     BrowserModule,

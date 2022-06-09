@@ -24,4 +24,8 @@ export class TodoService {
     return this.http.get<any[]>('http://localhost:3000/todo_items/items/' + id)
   }
 
+  createList(data: any) {
+    return this.http.post('http://localhost:3000/todo_lists', {data})
+  }
+
 }

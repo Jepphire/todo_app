@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { TodoService } from '../shared/services/todo.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -7,9 +8,25 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SidebarComponent implements OnInit {
 
-  constructor() { }
+  @Output() toggleSidenav = new EventEmitter<any>()
+  todoLists: any[] = []
+
+  constructor(
+    private TodoService: TodoService
+  ) { }
 
   ngOnInit(): void {
+    this.showLists()
+  }
+
+  onToggleSidenav() {
+    this.toggleSidenav.emit()
+  }
+
+  showLists() {
+    this.TodoService.getAllLists().subscribe(data => {
+      this.todoLists = data;
+    })
   }
 
 }

@@ -5,13 +5,18 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+
 
 const materialModules = [
   MatIconModule,
   MatToolbarModule,
   MatCardModule,
   MatButtonModule,
-  MatSidenavModule
+  MatSidenavModule,
+  MatFormFieldModule,
+  MatInputModule
 ]
 
 @NgModule({
