@@ -1,10 +1,11 @@
-<div class="todo-form">
+<form class="todo-form" [formGroup]="todoForm" (ngSubmit)="onSubmit(todoForm)">
   <mat-form-field appearance="outline">
     <mat-label>List Title</mat-label>
-    <input matInput>
+    <input matInput id="title" formControlName="title">
   </mat-form-field>
   <mat-form-field appearance="outline">
     <mat-label>List Description</mat-label>
-    <textarea matInput></textarea>
+    <textarea matInput id="description" formControlName="description"></textarea>
   </mat-form-field>
-</div>
+  <button type="submit">Submit</button>
+</form>

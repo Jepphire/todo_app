@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
+import { TodoService } from '../shared/services/todo.service';
 
 @Component({
   selector: 'app-todo-form',
@@ -7,9 +10,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TodoFormComponent implements OnInit {
 
-  constructor() { }
+  todoForm = new FormGroup({
+    'title': new FormControl(null),
+    'description': new FormControl(null)
+  })
+
+  constructor(
+    private todoService: TodoService,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
+  }
+
+  onSubmit(formData: any) {
+    this.todoService.createList(formData.value).subscribe(() => {
+      this.router.navigate(['/'])
+    })
   }
 
 }
