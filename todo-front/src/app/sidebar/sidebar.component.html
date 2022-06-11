@@ -9,5 +9,11 @@
 <div class="sidenav-list-container">
   <div class="sidenav-list-item" *ngFor="let list of todoLists">
     <a class="sidenav-list-link" [routerLink]="['/todo', list.id]" (click)="onToggleSidenav()">{{ list.title }}</a>
+    <button
+      class="delete-list-btn"
+      mat-icon-button
+      (click)="onDeleteList(list.id)">
+      <mat-icon class="delete-list-icon">delete</mat-icon>
+    </button>
   </div>
 </div>

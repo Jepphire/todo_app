@@ -1,2 +1,33 @@
-<h2 *ngIf="list">{{ list.title }}</h2>
-<p *ngFor="let item of listItems">{{ item.description }}</p>
+<div class="list-edit-form-container" *ngIf="edit">
+  <form class="list-edit-form" [formGroup]="todoEditForm" (ngSubmit)="onSaveEdit(todoEditForm)">
+    <mat-form-field appearance="outline">
+      <mat-label>List Title</mat-label>
+      <input matInput value="{{ list.title }}" formControlName="title">
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>List Description</mat-label>
+      <textarea matInput value="{{ list.description}}" formControlName="description"></textarea>
+    </mat-form-field>
+    <button type="submit">Save</button>
+  </form>
+  <button (click)="onCancelEdit()">Cancel</button>
+</div>
+
+<div class="list-container" *ngIf="!edit">
+  <div class="list-title-desc" *ngIf="list">
+    <h2>{{ list.title }}</h2>
+    <p>{{ list.description }}</p>
+  </div>
+  <div class="list-items" *ngIf="listItems">
+    <p *ngFor="let item of listItems">{{ item.description }}</p>
+  </div>
+  <button (click)="onEdit()">edit</button>
+</div>
+
+<button
+  *ngIf="list"
+  class="delete-list-btn"
+  mat-icon-button
+  (click)="onDelete(list.id)">
+  <mat-icon class="delete-list-icon">delete</mat-icon>
+</button>

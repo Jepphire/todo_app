@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TodoService } from '../shared/services/todo.service';
@@ -25,7 +25,8 @@ export class TodoFormComponent implements OnInit {
 
   onSubmit(formData: any) {
     this.todoService.createList(formData.value).subscribe(() => {
-      this.router.navigate(['/'])
+      this.router.navigate(['/']),
+      this.todoService.refreshList.next()
     })
   }
 

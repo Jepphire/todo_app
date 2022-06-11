@@ -1,12 +1,14 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Observable } from "rxjs";
+import { Observable, Subject } from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class TodoService {
+
+  refreshList = new Subject();
 
   constructor(
     private http: HttpClient
@@ -26,6 +28,14 @@ export class TodoService {
 
   createList(data: any): Observable<any> {
     return this.http.post('http://localhost:3000/todo_lists', data)
+  }
+
+  updateList(data: any, id: number | string) {
+    return this.http.put('http://localhost:3000/todo_lists/' + id, data)
+  }
+
+  destroyList(id: number | string) {
+    return this.http.delete('http://localhost:3000/todo_lists/' + id)
   }
 
 }
