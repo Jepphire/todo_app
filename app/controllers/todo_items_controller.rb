@@ -52,7 +52,7 @@ class TodoItemsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def todo_item_params
-      params.require(:todo_item).permit(:description)
+      params.require(:todo_item).permit(:description, :todo_list_id)
     end
 
 end

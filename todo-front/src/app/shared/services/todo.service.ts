@@ -38,4 +38,12 @@ export class TodoService {
     return this.http.delete('http://localhost:3000/todo_lists/' + id)
   }
 
+  createItem(data: any) {
+    return this.http.post('http://localhost:3000/todo_items', data)
+  }
+
+  destroyItem(id: number | string) {
+    return this.http.delete('http://localhost:3000/todo_items/' + id)
+  }
+
 }

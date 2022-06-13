@@ -1,5 +1,6 @@
+<!-- form displayed (edit mode) -->
 <div class="list-edit-form-container" *ngIf="edit">
-  <form class="list-edit-form" [formGroup]="todoEditForm" (ngSubmit)="onSaveEdit(todoEditForm)">
+  <form class="list-edit-form" [formGroup]="todoEditForm" (ngSubmit)="onSaveEditList(todoEditForm)">
     <mat-form-field appearance="outline">
       <mat-label>List Title</mat-label>
       <input matInput value="{{ list.title }}" formControlName="title">
@@ -10,24 +11,42 @@
     </mat-form-field>
     <button type="submit">Save</button>
   </form>
-  <button (click)="onCancelEdit()">Cancel</button>
+  <button (click)="onCancelEditList()">Cancel</button>
 </div>
 
+<!-- content displayed (not edit mode) -->
 <div class="list-container" *ngIf="!edit">
   <div class="list-title-desc" *ngIf="list">
     <h2>{{ list.title }}</h2>
     <p>{{ list.description }}</p>
   </div>
   <div class="list-items" *ngIf="listItems">
-    <p *ngFor="let item of listItems">{{ item.description }}</p>
+    <button *ngIf="!newItem" (click)="onNewItem()">New Item</button>
+    <div class="new-item" *ngIf="newItem">
+      <input
+        matInput
+        #newItemInput
+        type="text"
+        (keyup.enter)="onAddItem(newItemInput.value); newItemInput.value = ''">
+        <button (click)="onAddItem(newItemInput.value); newItemInput.value = ''">Add</button>
+    </div>
+    <div class="list-item" *ngFor="let item of listItems">
+      <mat-checkbox></mat-checkbox>
+      <p>{{ item.description }}</p>
+      <!-- <button (click)="onEditItem()">Edit</button> ### maybe unnecessary, revisit later -->
+      <button (click)="onDeleteItem(item.id)">X</button>
+    </div>
   </div>
-  <button (click)="onEdit()">edit</button>
 </div>
+
+<br>
+
+<button (click)="onEditList()">edit</button>
 
 <button
   *ngIf="list"
   class="delete-list-btn"
   mat-icon-button
-  (click)="onDelete(list.id)">
+  (click)="onDeleteList(list.id)">
   <mat-icon class="delete-list-icon">delete</mat-icon>
 </button>

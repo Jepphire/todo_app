@@ -15,6 +15,8 @@ export class TodoComponent implements OnInit {
   listItems: any[] = [];
   edit: boolean = false;
   todoEditForm: any;
+  newItem: boolean = false;
+  // editItem: boolean = false;
 
   constructor(
     private todoService: TodoService,
@@ -32,15 +34,9 @@ export class TodoComponent implements OnInit {
         this.listItems = data
       });
     });
-    // this.todoService.getListById(this.routeParams['id']).subscribe(data => {
-    //   this.list = data
-    // });
-    // this.todoService.getListItems(this.routeParams['id']).subscribe(data => {
-    //   this.listItems = data
-    // });
   }
 
-  onEdit() {
+  onEditList() {
     this.router.navigate([], {relativeTo: this.route, queryParams: {edit: 'true'}});
     this.edit = true;
     this.todoEditForm = new FormGroup({
@@ -49,7 +45,7 @@ export class TodoComponent implements OnInit {
     });
   }
 
-  onSaveEdit(formData: any) {
+  onSaveEditList(formData: any) {
     this.todoService.updateList(formData.value, this.routeParams['id']).subscribe(() => {
       this.router.navigate(['/todo/' + this.routeParams['id']]);
       this.list = formData.value;
@@ -58,16 +54,42 @@ export class TodoComponent implements OnInit {
     })
   }
 
-  onCancelEdit() {
+  onCancelEditList() {
     this.todoEditForm.reset();
     this.router.navigate(['/todo/' + this.routeParams['id']]);
     this.edit = false;
   }
 
-  onDelete(id: number) {
+  onDeleteList(id: number) {
     this.todoService.destroyList(id).subscribe(() => {
       this.router.navigate(['/']);
       this.todoService.refreshList.next();
+    });
+  }
+
+  onNewItem() {
+    this.newItem = true;
+  }
+
+  onAddItem(newItemData: string) {
+    this.todoService.createItem({
+      description: newItemData,
+      todo_list_id: this.routeParams['id']
+    }).subscribe(() => {
+      this.listItems.push({description: newItemData});
+    });
+  }
+
+  // onFinishItem() {}
+
+  // onEditItem() {}
+
+  onDeleteItem(id: number) {
+    this.todoService.destroyItem(id).subscribe(() => {
+      this.listItems.forEach((value, index) => {
+        if (value.id == id)
+          this.listItems.splice(index, 1)
+      });
     });
   }
 
