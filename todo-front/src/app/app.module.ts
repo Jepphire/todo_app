@@ -12,6 +12,9 @@ import { HeaderComponent } from './header/header.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { TodoComponent } from './todo/todo.component';
 import { TodoFormComponent } from './todo-form/todo-form.component';
+import { SignInComponent } from './sign-in/sign-in.component';
+import { SignUpComponent } from './sign-up/sign-up.component';
+import { AuthComponent } from './auth/auth.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +24,9 @@ import { TodoFormComponent } from './todo-form/todo-form.component';
     SidebarComponent,
     TodoComponent,
     TodoFormComponent,
+    SignInComponent,
+    SignUpComponent,
+    AuthComponent,
   ],
   imports: [
     BrowserModule,
