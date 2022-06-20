@@ -21,7 +21,6 @@ export class HeaderComponent implements OnInit {
     this.routeParamsSub = this.route.queryParams.subscribe(params => {
       if (params['auth']) {
         this.openAuthDialog(params['auth'])
-        // console.log(params['auth'])
       }
     })
   }

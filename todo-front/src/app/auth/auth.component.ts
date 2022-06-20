@@ -17,7 +17,8 @@ export class AuthComponent implements OnInit {
 
   authForm = new FormGroup({
     'email': new FormControl(null),
-    'password': new FormControl(null)
+    'password': new FormControl(null),
+    'passwordConfirm': new FormControl(null)
   })
 
   constructor(
