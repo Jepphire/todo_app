@@ -9,7 +9,7 @@ class User < ApplicationRecord
     validates :email, 
         format: { with: URI::MailTo::EMAIL_REGEXP }, 
         presence: true, 
-        uniqueness: {case_sensitive: false}
+        uniqueness: { case_sensitive: false }
 
     def confirm!
         update_columns(confirmed_at: Time.present)

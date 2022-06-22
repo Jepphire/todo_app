@@ -14,6 +14,7 @@ export class AuthComponent implements OnInit {
 
   signUp: boolean = false;
   signIn: boolean = false;
+  authType: any;
 
   authForm = new FormGroup({
     'email': new FormControl(null),
@@ -24,18 +25,19 @@ export class AuthComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private authService: AuthService,
     private dialogRef: MatDialogRef<AuthComponent>,
-    @Inject(MAT_DIALOG_DATA) data: any
+    @Inject(MAT_DIALOG_DATA) dialogData: any
   ) {
-    if (data.auth == 'sign_up') {this.signUp = true}
-    else if (data.auth == 'sign_in') {this.signIn = true};
+    this.authType = dialogData.auth;
+    if (dialogData.auth == 'sign_up') {this.signUp = true}
+    else if (dialogData.auth == 'sign_in') {this.signIn = true};
   }
 
   ngOnInit(): void {}
 
   submitDialog(formData: any) {
-    this.dialogRef.close(formData.value);
+    let mergedData = {...formData.value, auth: this.authType}
+    this.dialogRef.close(mergedData);
     this.router.navigate([], {relativeTo: this.route});
     this.signUp = false;
     this.signIn = false;

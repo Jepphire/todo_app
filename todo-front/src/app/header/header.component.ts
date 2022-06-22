@@ -1,8 +1,13 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { map, filter } from 'rxjs/operators'
+
 import { AuthComponent } from '../auth/auth.component';
+
+import { AuthService } from '../shared/services/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -16,6 +21,7 @@ export class HeaderComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private authService: AuthService,
     public dialog: MatDialog
   ) {
     this.routeParamsSub = this.route.queryParams.subscribe(params => {
@@ -41,8 +47,30 @@ export class HeaderComponent implements OnInit {
     const dialogRef = this.dialog.open(AuthComponent, dialogConfig);
 
     dialogRef.afterClosed().subscribe(data => {
-      console.log(data)
+      if (data.auth == 'sign_in') {
+        const authData = {
+          email: data.email,
+          password: data.password
+        };
+        this.onSignIn(authData);
+      }
+      else if (data.auth == 'sign_up') {
+        const authData = {
+          user: {
+            email: data.email,
+            password: data.password
+          }
+        };
+        this.onSignUp(authData);
+      }
     })
+  }
+
+  onSignIn(authData: any) {}
+
+  onSignUp(authData: any) {
+    this.authService.createUser(authData).subscribe()
+    // console.log(authData)
   }
 
 }
