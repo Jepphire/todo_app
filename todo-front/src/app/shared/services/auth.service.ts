@@ -14,8 +14,14 @@ export class AuthService {
   ) {}
 
   createUser(data: any) {
-    return this.http.post('http://localhost:3000/users', data)
-    // console.log(data)
+    return this.http.post('http://localhost:3000/users', data).subscribe()
+  }
+
+  signIn(data: any) {
+    return this.http.post('http://localhost:3000/users/authenticate', data).subscribe(resData => {
+      this.currentUser = resData;
+      console.log(this.currentUser)
+    })
   }
 
 }

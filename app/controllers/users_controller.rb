@@ -1,16 +1,16 @@
 class UsersController < ApplicationController
+    skip_before_action :authenticate_request, only: %i[ create ]
     before_action :set_user, only: %i[ show update destroy ]
 
   # GET /users
   def index
     @users = User.all
-
     render json: @users
   end
 
   # GET /users/1
   def show
-    render json: @users
+    render json: @user
   end
 
   # POST /users
@@ -20,7 +20,7 @@ class UsersController < ApplicationController
     if @user.save
       render json: @user, status: :created, location: @user
     else
-      render json: @user.errors, status: :unprocessable_entity
+      render json: { errors: @user.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
@@ -29,7 +29,7 @@ class UsersController < ApplicationController
     if @user.update(user_params)
       render json: @user
     else
-      render json: @user.errors, status: :unprocessable_entity
+      render json: { errors: @user.errors.full_messages }, status: :unprocessable_entity
     end
   end
 

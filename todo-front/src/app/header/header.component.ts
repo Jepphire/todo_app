@@ -49,10 +49,12 @@ export class HeaderComponent implements OnInit {
     dialogRef.afterClosed().subscribe(data => {
       if (data.auth == 'sign_in') {
         const authData = {
-          email: data.email,
-          password: data.password
+          session: {
+            email: data.email,
+            password: data.password
+          }
         };
-        this.onSignIn(authData);
+        this.authService.signIn(authData);
       }
       else if (data.auth == 'sign_up') {
         const authData = {
@@ -61,16 +63,9 @@ export class HeaderComponent implements OnInit {
             password: data.password
           }
         };
-        this.onSignUp(authData);
+        this.authService.createUser(authData);
       }
     })
-  }
-
-  onSignIn(authData: any) {}
-
-  onSignUp(authData: any) {
-    this.authService.createUser(authData).subscribe()
-    // console.log(authData)
   }
 
 }
