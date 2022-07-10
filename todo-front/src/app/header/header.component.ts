@@ -48,13 +48,7 @@ export class HeaderComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(data => {
       if (data.auth == 'sign_in') {
-        const authData = {
-          session: {
-            email: data.email,
-            password: data.password
-          }
-        };
-        this.authService.signIn(authData);
+        this.authService.signIn(data);
       }
       else if (data.auth == 'sign_up') {
         const authData = {

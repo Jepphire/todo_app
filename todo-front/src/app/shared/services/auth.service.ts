@@ -18,7 +18,7 @@ export class AuthService {
   }
 
   signIn(data: any) {
-    return this.http.post('http://localhost:3000/users/authenticate', data).subscribe(resData => {
+    return this.http.post('http://localhost:3000/auth/login', data).subscribe(resData => {
       this.currentUser = resData;
       console.log(this.currentUser)
     })
