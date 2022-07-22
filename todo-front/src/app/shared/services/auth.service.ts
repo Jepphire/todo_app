@@ -7,8 +7,6 @@ import { Injectable } from "@angular/core";
 
 export class AuthService {
 
-  currentUser: any;
-
   constructor(
     private http: HttpClient
   ) {}
@@ -18,10 +16,19 @@ export class AuthService {
   }
 
   signIn(data: any) {
-    return this.http.post('http://localhost:3000/auth/login', data).subscribe(resData => {
-      this.currentUser = resData;
-      console.log(this.currentUser)
-    })
+    return this.http.post('http://localhost:3000/auth/login', data).subscribe(
+      resData => this.setSession(resData)
+    )
+  }
+
+  signOut() {
+    localStorage.removeItem("user_token")
+  }
+
+  private setSession(authResponse: any) {
+    localStorage.setItem('user_token', authResponse.token);
+    // let yeet = moment().add()
+    // localStorage.setItem('token_exp', JSON.stringify(moment()))
   }
 
 }
