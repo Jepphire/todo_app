@@ -1,5 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import * as moment from 'moment';
 
 @Injectable({
   providedIn: 'root'
@@ -27,8 +28,8 @@ export class AuthService {
 
   private setSession(authResponse: any) {
     localStorage.setItem('user_token', authResponse.token);
-    // let yeet = moment().add()
-    // localStorage.setItem('token_exp', JSON.stringify(moment()))
+    localStorage.setItem('token_exp', JSON.stringify(moment().add(14, 'days').format()))
+    // console.log(moment().add(14, 'days').format())
   }
 
 }
