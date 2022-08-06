@@ -5,8 +5,13 @@ class AuthenticationController < ApplicationController
     def login
         @user = User.find_by email: params[:email]
         if @user&.authenticate(params[:password])
-            token = encode(user_id: @user.id)
-            render json: { token: token }
+            exp = Time.now + 14.days
+            token = encode({ user_id: @user.id }, exp)
+            render json: { 
+                id: @user.id,
+                exp: exp,
+                token: token
+            }
         else
             render json: { error: 'unauthorized' }, status: :unauthorized
         end

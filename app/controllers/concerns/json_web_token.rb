@@ -5,7 +5,7 @@ module JsonWebToken
 
     SECRET_KEY = Rails.application.secret_key_base
 
-    def encode(payload, exp = 14.days.from_now)
+    def encode(payload, exp)
         payload[:exp] = exp.to_i
         JWT.encode(payload, SECRET_KEY)
     end

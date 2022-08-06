@@ -1,12 +1,17 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { Subject } from "rxjs";
 import * as moment from 'moment';
+
+import { User } from "../models/user.model";
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class AuthService {
+
+  user = new Subject<User>();
 
   constructor(
     private http: HttpClient
@@ -23,17 +28,27 @@ export class AuthService {
   }
 
   signOut() {
-    localStorage.removeItem("user_token");
-    localStorage.removeItem("token_exp");
+    // localStorage.removeItem("user_token");
+    // localStorage.removeItem("token_exp");
   }
 
   public isLoggedIn() {
     return moment().isBefore(this.getTokenExp())
   }
 
+  public isLoggedOut() {
+    return !this.isLoggedIn();
+  }
+
   private setSession(authResponse: any) {
-    localStorage.setItem('user_token', authResponse.token);
-    localStorage.setItem('token_exp', JSON.stringify(moment().add(14, 'days')).valueOf())
+    // localStorage.setItem('user_token', authResponse.token);
+    // localStorage.setItem('token_exp', JSON.stringify(moment().add(14, 'days')).valueOf())
+    const user = new User(
+      authResponse.id,
+      authResponse.token,
+      authResponse.exp
+    );
+    this.user.next(user);
   }
 
   getTokenExp() {
@@ -42,7 +57,7 @@ export class AuthService {
       const expiration = JSON.parse(token_exp)
       return moment(expiration)
     }
-    else return
+    else return null
   }
 
 }
