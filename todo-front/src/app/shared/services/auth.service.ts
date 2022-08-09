@@ -1,6 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Subject } from "rxjs";
+import { Subject, throwError } from "rxjs";
+import { catchError } from "rxjs/operators";
 import * as moment from 'moment';
 
 import { User } from "../models/user.model";
@@ -17,13 +18,34 @@ export class AuthService {
     private http: HttpClient
   ) {}
 
-  createUser(data: any) {
-    return this.http.post('http://localhost:3000/users', data).subscribe()
+  signUp(data: any) {
+    return this.http.post('http://localhost:3000/users', data).pipe(
+      catchError(errorRes => {
+        let message = 'An unknown error has ocurred';
+        if (!errorRes.error || !errorRes.error.error) {
+          return throwError(message);
+        }
+        switch (errorRes.error.errors[0]) {
+          case 'Email is invalid': message = 'Email is invalid'; break;
+          case 'Email has already been taken': message = 'This email is already in use';
+        }
+        return throwError(message);
+      })
+    )
   }
 
   signIn(data: any) {
-    return this.http.post('http://localhost:3000/auth/login', data).subscribe(
-      resData => this.setSession(resData)
+    return this.http.post('http://localhost:3000/auth/login', data).pipe(
+      catchError(errorRes => {
+        let message = 'An unknown error has ocurred';
+        if (!errorRes.error || !errorRes.error.error) {
+          return throwError(message);
+        }
+        switch (errorRes.error.error) {
+          case 'unauthorized': message = 'Incorrect email/password';
+        }
+        return throwError(message);
+      })
     )
   }
 

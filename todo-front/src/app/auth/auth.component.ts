@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -14,18 +14,19 @@ export class AuthComponent implements OnInit {
 
   signUp: boolean = false;
   signIn: boolean = false;
-  authType: any;
+  authType: string;
 
   authForm = new FormGroup({
     'email': new FormControl(null),
     'password': new FormControl(null),
-    'passwordConfirm': new FormControl(null)
+    'password_confirmation': new FormControl(null)
   })
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private dialogRef: MatDialogRef<AuthComponent>,
+    private authService: AuthService,
     @Inject(MAT_DIALOG_DATA) dialogData: any
   ) {
     this.authType = dialogData.auth;
@@ -36,18 +37,32 @@ export class AuthComponent implements OnInit {
   ngOnInit(): void {}
 
   submitDialog(formData: any) {
-    let mergedData = {...formData.value, auth: this.authType}
-    this.dialogRef.close(mergedData);
-    this.router.navigate([], {relativeTo: this.route});
-    this.signUp = false;
-    this.signIn = false;
+    if (!formData.valid) return
+    if (this.authType == 'sign_up') {
+      this.onSignUp(formData.value)
+    } else if (this.authType == 'sign_in') {
+      this.onSignIn(formData.value)
+    }
+    // let mergedData = {...formData.value, auth: this.authType}
+    // this.dialogRef.close(mergedData);
+    // this.router.navigate([], {relativeTo: this.route});
+    // this.signUp = false;
+    // this.signIn = false;
   }
 
   closeDialog() {
     this.dialogRef.close();
     this.router.navigate([], {relativeTo: this.route});
-    this.signUp = false;
-    this.signIn = false;
+    // this.signUp = false;
+    // this.signIn = false;
+  }
+
+  onSignUp(formData: any) {
+    this.authService.signUp({ user: formData}).subscribe(res => {}, error => {console.log(error)})
+  }
+
+  onSignIn(formData: any) {
+    this.authService.signIn(formData).subscribe(res => {}, error => {console.log(error)})
   }
 
 }

@@ -11,6 +11,6 @@ export class User {
     if (!this._tokenExp || moment().isAfter(this._tokenExp)) {
       return null;
     }
-    return this._token;
+    else return this._token;
   }
 }

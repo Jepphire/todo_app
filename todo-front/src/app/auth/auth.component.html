@@ -55,6 +55,12 @@
   </mat-dialog-content>
 
   <mat-dialog-actions>
-    <button type="submit" (click)="submitDialog(authForm)">Sign In</button>
+    <button
+      type="submit"
+      (click)="submitDialog(authForm)"
+      [disabled]="!authForm.valid"
+    >
+      Sign In
+    </button>
   </mat-dialog-actions>
 </div>

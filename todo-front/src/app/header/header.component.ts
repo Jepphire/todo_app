@@ -46,20 +46,20 @@ export class HeaderComponent implements OnInit {
 
     const dialogRef = this.dialog.open(AuthComponent, dialogConfig);
 
-    dialogRef.afterClosed().subscribe(data => {
-      if (data.auth == 'sign_in') {
-        this.authService.signIn(data);
-      }
-      else if (data.auth == 'sign_up') {
-        const authData = {
-          user: {
-            email: data.email,
-            password: data.password
-          }
-        };
-        this.authService.createUser(authData);
-      }
-    })
+    // dialogRef.afterClosed().subscribe(data => {
+    //   if (data.auth == 'sign_in') {
+    //     this.authService.signIn(data);
+    //   }
+    //   else if (data.auth == 'sign_up') {
+    //     const authData = {
+    //       user: {
+    //         email: data.email,
+    //         password: data.password
+    //       }
+    //     };
+    //     this.authService.createUser(authData);
+    //   }
+    // })
   }
 
   onSignOut() {
