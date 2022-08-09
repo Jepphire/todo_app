@@ -6,8 +6,8 @@
     <h1 class="mat-h3 app-title">Another To-Do App</h1>
   </a>
   <div class="nav-links">
-    <a [routerLink]="" [queryParams]="{auth: 'sign_in'}" class="nav-links-item">Sign In</a>
-    <a href="#" class="nav-links-item" (click)="onSignOut()">Log Out</a>
-    <a [routerLink]="" [queryParams]="{auth: 'sign_up'}" class="nav-links-item">Sign Up</a>
+    <a *ngIf="!authenticated" [routerLink]="" [queryParams]="{auth: 'sign_in'}" class="nav-links-item">Sign In</a>
+    <a *ngIf="authenticated" href="#" class="nav-links-item" (click)="onSignOut()">Log Out</a>
+    <a *ngIf="!authenticated" [routerLink]="" [queryParams]="{auth: 'sign_up'}" class="nav-links-item">Sign Up</a>
   </div>
 </mat-toolbar>

@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Subject, throwError } from "rxjs";
-import { catchError } from "rxjs/operators";
+import { catchError, tap } from "rxjs/operators";
 import * as moment from 'moment';
 
 import { User } from "../models/user.model";
@@ -45,13 +45,15 @@ export class AuthService {
           case 'unauthorized': message = 'Incorrect email/password';
         }
         return throwError(message);
-      })
+      }),
+      tap(resData => {this.setSession(resData)})
     )
   }
 
   signOut() {
     // localStorage.removeItem("user_token");
     // localStorage.removeItem("token_exp");
+    this.user.next()
   }
 
   public isLoggedIn() {

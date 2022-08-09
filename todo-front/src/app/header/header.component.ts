@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -14,10 +14,12 @@ import { AuthService } from '../shared/services/auth.service';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
 
   @Output() toggleSidenav = new EventEmitter<any>();
-  routeParamsSub: Subscription
+  routeParamsSub: Subscription;
+  private userSub: Subscription;
+  authenticated = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -32,6 +34,9 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.userSub = this.authService.user.subscribe(user => {
+      this.authenticated = !!user
+    });
   }
 
   onToggleSidenav() {
@@ -64,6 +69,10 @@ export class HeaderComponent implements OnInit {
 
   onSignOut() {
     this.authService.signOut();
+  }
+
+  ngOnDestroy(): void {
+      this.userSub.unsubscribe();
   }
 
 }

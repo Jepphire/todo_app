@@ -58,11 +58,11 @@ export class AuthComponent implements OnInit {
   }
 
   onSignUp(formData: any) {
-    this.authService.signUp({ user: formData}).subscribe(res => {}, error => {console.log(error)})
+    this.authService.signUp({ user: formData}).subscribe(() => {this.closeDialog()}, error => {console.log(error)})
   }
 
   onSignIn(formData: any) {
-    this.authService.signIn(formData).subscribe(res => {}, error => {console.log(error)})
+    this.authService.signIn(formData).subscribe(() => {this.closeDialog()}, error => {console.log(error)})
   }
 
 }
