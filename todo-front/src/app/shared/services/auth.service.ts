@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Subject, throwError } from "rxjs";
+import { BehaviorSubject, ReplaySubject, throwError } from "rxjs";
 import { catchError, tap } from "rxjs/operators";
 import * as moment from 'moment';
 
@@ -12,7 +12,7 @@ import { User } from "../models/user.model";
 
 export class AuthService {
 
-  user = new Subject<User>();
+  user = new BehaviorSubject<User | null>(null)
 
   constructor(
     private http: HttpClient
@@ -50,38 +50,32 @@ export class AuthService {
     )
   }
 
+  autoSignIn() {
+    const userString = localStorage.getItem('current_user')
+    if (userString) {
+      const userObj = JSON.parse(userString);
+      const user = new User(
+        userObj.id,
+        userObj._token,
+        userObj._tokenExp
+      );
+      (user.token ? this.user.next(user) : this.signOut)
+    }
+  }
+
   signOut() {
-    // localStorage.removeItem("user_token");
-    // localStorage.removeItem("token_exp");
-    this.user.next()
+    this.user.next(null);
+    localStorage.removeItem('current_user');
   }
 
-  public isLoggedIn() {
-    return moment().isBefore(this.getTokenExp())
-  }
-
-  public isLoggedOut() {
-    return !this.isLoggedIn();
-  }
-
-  private setSession(authResponse: any) {
-    // localStorage.setItem('user_token', authResponse.token);
-    // localStorage.setItem('token_exp', JSON.stringify(moment().add(14, 'days')).valueOf())
+  private setSession(userData: any) {
     const user = new User(
-      authResponse.id,
-      authResponse.token,
-      authResponse.exp
+      userData.id,
+      userData.token,
+      userData.exp
     );
     this.user.next(user);
-  }
-
-  getTokenExp() {
-    const token_exp = localStorage.getItem("token_exp")
-    if (token_exp) {
-      const expiration = JSON.parse(token_exp)
-      return moment(expiration)
-    }
-    else return null
+    localStorage.setItem('current_user', JSON.stringify(user));
   }
 
 }

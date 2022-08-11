@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { AuthService } from './shared/services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -11,9 +12,11 @@ export class AppComponent implements OnInit {
   showSidenav: boolean = false;
   @ViewChild('SidebarComponent') sidebar: any;
 
-  constructor() {}
+  constructor(private authService: AuthService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.authService.autoSignIn();
+  }
 
   toggleSidenav() {
     this.showSidenav = !this.showSidenav;
