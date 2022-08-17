@@ -16,6 +16,7 @@ class TodoListsController < ApplicationController
   # POST /todo_lists
   def create
     @todo_list = TodoList.new(todo_list_params)
+    @todo_list.user = authenticate_request
 
     if @todo_list.save
       render json: @todo_list, status: :created, location: @todo_list
