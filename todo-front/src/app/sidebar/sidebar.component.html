@@ -6,8 +6,8 @@
   (click)="onToggleSidenav()">
   <mat-icon class="new-list-icon">add</mat-icon>
 </button>
-<div class="sidenav-list-container">
-  <div class="sidenav-list-item" *ngFor="let list of todoLists">
+<div *ngIf="authenticated" class="sidenav-list-container">
+  <div *ngFor="let list of todoLists" class="sidenav-list-item">
     <a class="sidenav-list-link" [routerLink]="['/todo', list.id]" (click)="onToggleSidenav()">{{ list.title }}</a>
     <button
       class="delete-list-btn"

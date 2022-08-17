@@ -1,5 +1,6 @@
 import { Component, EventEmitter, OnInit, OnDestroy, Output } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { AuthService } from '../shared/services/auth.service';
 import { TodoService } from '../shared/services/todo.service';
 
 @Component({
@@ -12,16 +13,22 @@ export class SidebarComponent implements OnInit, OnDestroy {
   @Output() toggleSidenav = new EventEmitter<any>()
 
   todoLists: any[] = []
-  refreshListSub = new Subscription
+  authenticated: boolean = false
+  private refreshListSub: Subscription;
+  private userSub: Subscription;
 
   constructor(
     private todoService: TodoService,
+    private authService: AuthService
   ) { }
 
   ngOnInit(): void {
-    this.showLists();
+    this.userSub = this.authService.user.subscribe(user => {
+      this.authenticated = !!user;
+      this.fetchLists();
+    });
     this.refreshListSub = this.todoService.refreshList.subscribe(() => {
-      this.showLists();
+      this.fetchLists();
     });
   }
 
@@ -31,18 +38,21 @@ export class SidebarComponent implements OnInit, OnDestroy {
 
   onDeleteList(id: number) {
     this.todoService.destroyList(id).subscribe(() => {
-      this.showLists();
+      this.fetchLists();
     });
   }
 
-  showLists() {
-    this.todoService.getAllLists().subscribe(data => {
-      this.todoLists = data;
-    });
+  fetchLists() {
+    if (this.authenticated) {
+      this.todoService.getAllLists().subscribe(data => {
+        this.todoLists = data;
+      });
+    }
   }
 
   ngOnDestroy(): void {
       this.refreshListSub.unsubscribe();
+      this.userSub.unsubscribe()
   }
 
 }
