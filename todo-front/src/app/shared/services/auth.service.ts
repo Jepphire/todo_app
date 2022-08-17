@@ -19,19 +19,7 @@ export class AuthService {
   ) {}
 
   signUp(data: any) {
-    return this.http.post('http://localhost:3000/users', data).pipe(
-      catchError(errorRes => {
-        let message = 'An unknown error has ocurred';
-        if (!errorRes.error || !errorRes.error.error) {
-          return throwError(message);
-        }
-        switch (errorRes.error.errors[0]) {
-          case 'Email is invalid': message = 'Email is invalid'; break;
-          case 'Email has already been taken': message = 'This email is already in use';
-        }
-        return throwError(message);
-      })
-    )
+    return this.http.post('http://localhost:3000/users', data)
   }
 
   signIn(data: any) {

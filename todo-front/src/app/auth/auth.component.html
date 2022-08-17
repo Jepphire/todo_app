@@ -1,6 +1,9 @@
 <button class="close-button" mat-icon-button (click)="closeDialog()">
   <mat-icon>close</mat-icon>
 </button>
+<div *ngIf="errors" class="alert">
+  <p *ngFor="let errors of errors">{{ errors }}</p>
+</div>
 <!-- SIGN UP FORM -->
 <div *ngIf="signUp">
   <h2 mat-dialog-title>Create An Account</h2>
