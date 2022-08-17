@@ -24,16 +24,6 @@ export class AuthService {
 
   signIn(data: any) {
     return this.http.post('http://localhost:3000/auth/login', data).pipe(
-      catchError(errorRes => {
-        let message = 'An unknown error has ocurred';
-        if (!errorRes.error || !errorRes.error.error) {
-          return throwError(message);
-        }
-        switch (errorRes.error.error) {
-          case 'unauthorized': message = 'Incorrect email/password';
-        }
-        return throwError(message);
-      }),
       tap(resData => {this.setSession(resData)})
     )
   }

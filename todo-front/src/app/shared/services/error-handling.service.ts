@@ -14,4 +14,9 @@ export class ErrorHandlingService {
   handleUserError(errorRes: any) {
     this.errorArr.next(errorRes.error.errors)
   }
+
+  handleAuthError(errorRes: any) {
+    this.errorArr.next(errorRes.error.errors)
+  }
+
 }

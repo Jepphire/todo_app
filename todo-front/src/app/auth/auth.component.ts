@@ -78,11 +78,10 @@ export class AuthComponent implements OnInit, OnDestroy {
   }
 
   onSignIn(formData: any) {
-    this.authService.signIn(formData).subscribe(() => {this.closeDialog()}, errorRes => {
-      // this.errorService.handleAuthError(errorRes)
+    this.authService.signIn(formData).subscribe(
+      () => {this.closeDialog()}, errorRes => {
+        this.errorService.handleAuthError(errorRes)
     })
-    // console.log(formData)
-    // this.authService.signIn(formData)
   }
 
   ngOnDestroy(): void {
