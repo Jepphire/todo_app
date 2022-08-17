@@ -2,7 +2,7 @@ import * as moment from 'moment';
 
 export class User {
   constructor(
-    public id: string,
+    public id: number,
     private _token: string,
     private _tokenExp: moment.Moment
   ) {}

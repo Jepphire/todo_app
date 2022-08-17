@@ -39,6 +39,12 @@ class TodoListsController < ApplicationController
     @todo_list.destroy
   end
 
+  #GET /todo_lists/user/1
+  def lists_where
+    @todo_lists = TodoList.where('user_id = ?', params[:user_id])
+    render json: @todo_lists
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_todo_list

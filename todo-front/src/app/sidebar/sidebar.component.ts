@@ -12,8 +12,9 @@ export class SidebarComponent implements OnInit, OnDestroy {
 
   @Output() toggleSidenav = new EventEmitter<any>()
 
-  todoLists: any[] = []
-  authenticated: boolean = false
+  todoLists: any[] = [];
+  authenticated: boolean = false;
+  userId: number;
   private refreshListSub: Subscription;
   private userSub: Subscription;
 
@@ -25,10 +26,13 @@ export class SidebarComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.userSub = this.authService.user.subscribe(user => {
       this.authenticated = !!user;
-      this.fetchLists();
+      if (user) {
+        this.userId = user.id;
+        this.fetchLists(user.id);
+      }
     });
     this.refreshListSub = this.todoService.refreshList.subscribe(() => {
-      this.fetchLists();
+      this.fetchLists(this.userId);
     });
   }
 
@@ -38,13 +42,13 @@ export class SidebarComponent implements OnInit, OnDestroy {
 
   onDeleteList(id: number) {
     this.todoService.destroyList(id).subscribe(() => {
-      this.fetchLists();
+      this.fetchLists(this.userId);
     });
   }
 
-  fetchLists() {
+  fetchLists(id: number) {
     if (this.authenticated) {
-      this.todoService.getAllLists().subscribe(data => {
+      this.todoService.getListsByUser(id).subscribe(data => {
         this.todoLists = data;
       });
     }
